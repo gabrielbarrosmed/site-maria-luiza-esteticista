@@ -151,19 +151,36 @@
   .hero-meta .v{font-family:var(--ff-display);font-size:20px;color:var(--sage-900)}
 
   /* Hero imagery */
-  .hero-right{position:relative;height:100%;min-height:620px}
-  .hero-photo{
-    position:absolute;inset:0;
-    background:url('assets/foto1.jpeg') center/cover;
-    filter:grayscale(0.15) contrast(1.02);
-    border-radius:2px;
-  }
-  .hero-photo::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, transparent 60%, rgba(61,79,61,0.12) 100%);
-  }
+ .hero-right{
+  position:relative;
+  height:100%;
+  min-height:570px;
+  overflow:hidden;
+}
+
+.hero-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 80%;
+  transform:scale(1.15);
+  transform-origin:center 80%;
+  filter:grayscale(0.15) contrast(1.02);
+  border-radius:2px;
+}
+
+@media (max-width:880px){
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-right{min-height:460px;margin:0 -10px}
+  .hero-photo{object-position:center 28%}
+  .hero-tag{left:10px;top:100px;font-size:16px}
+  .hero-badge{right:10px;bottom:20px;max-width:220px}
+  .hero-meta{gap:28px;flex-wrap:wrap}
+}
   .hero-tag{
-    position:absolute;left:-30px;top:140px;
+    position:absolute;left:1px;top:10px;
     background:var(--sage-900);color:var(--cream);
     padding:10px 14px;
     font-family:var(--ff-display);font-style:italic;font-size:18px;
@@ -217,8 +234,11 @@
   .about-img{
     position:relative;
     aspect-ratio:3/4;
-    background:url('assets/foto2.jpeg') center/cover;
     border-radius:2px;
+    overflow:hidden;
+  }
+  .about-img img{
+    position:absolute;inset:0;width:100%;height:105%;object-fit:cover;object-position:center top;display:block;
   }
   .about-img::before{
     content:"";position:absolute;inset:-20px -20px 20px 20px;
@@ -369,35 +389,29 @@
   .testim-head h2{font-size:clamp(38px, 5vw, 60px);font-weight:300;line-height:1.1}
   .testim-head h2 em{font-style:italic;color:var(--sage-700)}
 
-  .testim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .testim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start}
   .t-card{
-    background:var(--cream);padding:40px 36px;border-radius:2px;
-    border:1px solid var(--line);
-    display:flex;flex-direction:column;gap:24px;
+    display:flex;flex-direction:column;gap:0;
     position:relative;
   }
-  .t-card::before{
-    content:"“";position:absolute;top:8px;left:26px;
-    font-family:var(--ff-display);font-size:90px;color:var(--sage-300);
-    line-height:1;font-style:italic;
+  .t-screenshot{
+    width:100%;border-radius:16px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.13);
+    display:block;
+    transition:transform 0.35s ease,box-shadow 0.35s ease;
   }
-  .t-quote{
-    font-family:var(--ff-display);font-size:20px;line-height:1.45;
-    color:var(--sage-900);font-weight:400;font-style:italic;
-    padding-top:22px;position:relative;z-index:1;text-wrap:pretty;
+  .t-card:hover .t-screenshot{
+    transform:translateY(-4px);
+    box-shadow:0 16px 56px rgba(0,0,0,0.18);
   }
-  .t-author{display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
-  .t-avatar{
-    width:42px;height:42px;border-radius:50%;
-    background:var(--sage-500);color:var(--cream);
-    display:grid;place-items:center;
-    font-family:var(--ff-display);font-size:18px;font-style:italic;
+  .t-caption{
+    margin-top:20px;
+    font-family:var(--ff-display);font-size:14px;font-style:italic;
+    color:var(--sage-700);text-align:center;line-height:1.4;
   }
-  .t-name{font-size:14px;color:var(--sage-900);font-weight:500}
-  .t-role{font-size:11px;color:var(--sage-700);letter-spacing:0.18em;text-transform:uppercase;margin-top:2px}
 
   @media (max-width:880px){
-    .testim-grid{grid-template-columns:1fr}
+    .testim-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
   }
 
   /* ------- FINAL CTA ------- */
@@ -504,7 +518,7 @@
     .hero-meta .v{font-size:16px}
 
     .hero-right{min-height:440px;margin:0 -6px}
-    .hero-photo{background-position:center 10%}
+    .hero-photo{object-position:center 10%}
     .hero-tag{
       left:8px;top:80px;font-size:11px;padding:5px 8px;
     }
@@ -527,12 +541,15 @@
       gap:0 !important;
     }
     .about-img{
+      width:100%;
       max-width:100%;
-      aspect-ratio:4/5;
+      aspect-ratio:unset;
+      height:322px;
       display:block;
       margin:28px 0 4px;
       order:2;
     }
+    .about-img img{object-position:center 100%}
     .about-img::before{inset:-8px -8px 8px 8px}
     .about-content{
       display:contents;
@@ -617,13 +634,7 @@
     .testim{padding:56px 0}
     .testim-head{margin-bottom:32px}
     .testim-head h2{font-size:32px}
-    .t-card{padding:22px 20px;gap:16px;border-radius:14px}
-    .t-card::before{font-size:64px;top:6px;left:18px}
-    .t-quote{font-size:17px;line-height:1.4;padding-top:14px}
-    .t-author{padding-top:16px;gap:12px}
-    .t-avatar{width:36px;height:36px;font-size:15px}
-    .t-name{font-size:13px}
-    .t-role{font-size:10px;letter-spacing:0.14em}
+    .t-caption{font-size:13px;margin-top:14px}
 
     /* FINAL CTA */
     .final{padding:72px 0}
@@ -712,7 +723,7 @@
       </div>
 
       <div class="hero-right">
-        <div class="hero-photo" role="img" aria-label="Retrato de Maria Luiza"></div>
+        <img class="hero-photo" src="assets/foto1.jpeg" alt="Retrato de Maria Luiza">
         <div class="hero-tag">Malu<small>Maria Luiza Estética</small></div>
         <div class="hero-badge">
           <div class="stars">★★★★★</div>
@@ -745,7 +756,9 @@
 <section class="about" id="sobre">
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-img" data-reveal role="img" aria-label="Maria Luiza em atendimento"></div>
+      <div class="about-img" data-reveal>
+        <img src="assets/foto2.jpeg" alt="Maria Luiza em atendimento" />
+      </div>
       <div class="about-content" data-reveal>
         <span class="eyebrow">Sobre mim</span>
         <h2>Olá, eu sou a <em>Maria Luiza.</em></h2>
@@ -865,7 +878,6 @@
     </div>
 
     <div class="gallery" data-reveal>
-      <div class="g g1" role="img" aria-label="Sobrancelha desenhada - resultado"></div>
       <div class="g g2" role="img" aria-label="Design natural"></div>
       <div class="g g3" role="img" aria-label="Brow lamination"></div>
       <div class="g g4" role="img" aria-label="Detalhe de sobrancelha"></div>
@@ -886,36 +898,18 @@
     </div>
     <div class="testim-grid">
       <div class="t-card" data-reveal>
-        <div class="t-quote">Eu não quero ficar nem mais uma semana sem fazer sobrancelha. Muda mttt tudo, faz toda a diferença né?</div>
-        <div class="t-author">
-          <span class="t-avatar">M</span>
-          <div>
-            <div class="t-name">Maria Clara</div>
-            <div class="t-role">Cliente</div>
-          </div>
-        </div>
+        <img class="t-screenshot" src="prova-social-1.jpeg" alt="Depoimento de cliente — design de sobrancelhas" loading="lazy">
+        <p class="t-caption">Design de sobrancelhas — Maria Clara</p>
       </div>
 
       <div class="t-card" data-reveal>
-        <div class="t-quote">Amei as limpezas de pele que você fez em mim. Minha pele ficou bem melhor, mais limpa, macia e com outra aparência mesmo. Dá pra ver o cuidado e o capricho que você tem em tudo.</div>
-        <div class="t-author">
-          <span class="t-avatar">C</span>
-          <div>
-            <div class="t-name">Cliente fiel</div>
-            <div class="t-role">Limpeza de pele</div>
-          </div>
-        </div>
+        <img class="t-screenshot" src="prova-social-2.jpeg" alt="Depoimento de cliente — limpeza de pele" loading="lazy">
+        <p class="t-caption">Limpeza de pele</p>
       </div>
 
       <div class="t-card" data-reveal>
-        <div class="t-quote">A sobrancelha ficou perfeita, eu amei! E os produtos e o aparelho que você usa faz toda diferença pra não me dar alergia. Ameiii, diva.</div>
-        <div class="t-author">
-          <span class="t-avatar">C</span>
-          <div>
-            <div class="t-name">Cliente</div>
-            <div class="t-role">Design de sobrancelhas</div>
-          </div>
-        </div>
+        <img class="t-screenshot" src="prova-social-3.jpeg" alt="Depoimento de cliente — design de sobrancelhas" loading="lazy">
+        <p class="t-caption">Design de sobrancelhas</p>
       </div>
     </div>
   </div>
